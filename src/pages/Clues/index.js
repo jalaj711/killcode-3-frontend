@@ -31,19 +31,9 @@ const GAME = () => {
     }
     setLoad(false);
   };
-
-  const navigate = useNavigate();
-
   /*eslint-disable */
   useEffect(() => {
     getStatus();
-    if (
-      !localStorage.getItem("tkn") ||
-      localStorage.getItem("tkn") === undefined
-    ) {
-      setActive(null);
-      navigate("/");
-    }
   }, []);
 
   if (load) {
