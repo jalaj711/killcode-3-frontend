@@ -4,8 +4,8 @@ const HEADER = () => {
   return (
     <>
       <div className="text">
-        <div className="killcode">KILLCODE-II</div>
-        <div className="killing">THE KILLINGS BEGIN ON 1ST FEBRUARY</div>
+        <div className="killcode">KILLCODE-III</div>
+        <div className="killing">THE KILLINGS BEGIN ON 1ST APRIL</div>
       </div>
     </>
   );
