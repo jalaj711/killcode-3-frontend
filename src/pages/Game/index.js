@@ -161,9 +161,7 @@ const GAME = () => {
               {currRound.next_round == 1 && (
                 <div className="container">
                   <div className="fore-word">
-                    The DS PD has been investigating the death of Anatoly
-                    Fernandez for a week now. But recent developments have
-                    shifted our focus. Today morning, a note arrived at the DS
+                    Today morning, a note arrived at the DS
                     PD precinct, which we believe is from the killer. This is a
                     substantial development. The note, its timing and tone make
                     us believe this is not a scattered homicide, rather the
