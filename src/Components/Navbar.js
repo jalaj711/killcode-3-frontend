@@ -16,7 +16,7 @@ const Navbar = () => {
    
     "leaderboard",
     "kill code",
-    "rules",
+    // "rules",
   ];
 
   const rulesContent = (
@@ -140,10 +140,10 @@ const Navbar = () => {
 
         navigate("/locations", { replace: true });
         break;
-      case "rules":
+      // case "rules":
        
-      setShowModal(true);
-        break;
+      // setShowModal(true);
+      //   break;
       case "leaderboard":
         setActive(4);
         setShow(!show);

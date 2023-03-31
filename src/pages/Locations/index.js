@@ -93,7 +93,7 @@ const LOCATIONS = () => {
     <>
       {/* <Navbar  /> */}
       <section className="map-container">
-        <img src="map.jpg" alt=""/>
+        <img src="map.png" alt=""/>
         {/* <MapContainer
           center={[51.505, -0.09]}
           style={{ height: 500, zIndex: 1 }}
