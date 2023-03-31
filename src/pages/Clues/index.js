@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 // import Navbar from "../../Components/Navbar";
 import SubNav from "../../Components/SubNav";
 import { BASE_URL } from "../../constants";
-import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading";
 
 const GAME = () => {
@@ -13,10 +12,8 @@ const GAME = () => {
     setLoad(true);
     try {
       const search = new URLSearchParams(window.location.search);
-      console.log(search.get('clue_id'));
       let headers = {
         "Content-Type": "application/json",
-        Authorization: "Token " + localStorage.getItem("tkn"),
       };
       let res = await fetch(`${BASE_URL}quiz/unlockClue?clue_id=` + search.get("clue_id"), {
         headers: { ...headers }
