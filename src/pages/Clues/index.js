@@ -15,9 +15,15 @@ const GAME = () => {
       let headers = {
         "Content-Type": "application/json",
       };
-      let res = await fetch(`${BASE_URL}quiz/unlockClue?clue_id=` + search.get("clue_id"), {
-        headers: { ...headers }
-      });
+      let res = await fetch(
+        `${BASE_URL}quiz/unlockClue?clue_id=` + search.get("clue_id"),
+        {
+          headers: {
+            ...headers,
+            Authorization: "Token " + localStorage.getItem("tkn"),
+          },
+        }
+      );
       let data = await res.json();
       // co",data);
       if (data.status === 200) {
@@ -44,10 +50,14 @@ const GAME = () => {
     <>
       <SubNav />
       <div className="info-evi">
-        Current Location: <br /><span dangerouslySetInnerHTML={{__html: clue.location}} />
-        <br /><br /><br />
-        Clue:<br />
-        <span dangerouslySetInnerHTML={{__html: clue.content}} />
+        Current Location: <br />
+        <span dangerouslySetInnerHTML={{ __html: clue.location }} />
+        <br />
+        <br />
+        <br />
+        Clue:
+        <br />
+        <span dangerouslySetInnerHTML={{ __html: clue.content }} />
       </div>
     </>
   );
