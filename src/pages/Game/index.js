@@ -11,11 +11,12 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading";
 
 const GAME = () => {
-  const { currRound, status, setStatus,setActive, setCurrRound } = useContext(STORE);
-  
+  const { currRound, status, setStatus, setActive, setCurrRound } =
+    useContext(STORE);
+
   const [location, setLocation] = useState("");
   const [victim, setVictim] = useState("");
-  const [load,setLoad]=useState(false);
+  const [load, setLoad] = useState(false);
   /* eslint-disable */
   const getStatus = async () => {
     setLoad(true);
@@ -37,7 +38,6 @@ const GAME = () => {
       if (data.message === "Answer saved successfully.") {
         setStatus(data);
       }
-    
     } catch (error) {
       console.log(error);
     }
@@ -65,10 +65,9 @@ const GAME = () => {
         method: "GET",
       });
       let result = await res.json();
-    
+
       setCurrRound(result);
     } catch (error) {
-    
       if (error.status == 401) {
         localStorage.removeItem("tkn");
         navigate("/", { replace: true });
@@ -81,30 +80,28 @@ const GAME = () => {
     if (
       !localStorage.getItem("tkn") ||
       localStorage.getItem("tkn") === undefined
-    )
-     { setActive(null);
-       navigate("/");
-    
+    ) {
+      setActive(null);
+      navigate("/");
     }
-   
-  
   }, []);
 
-  if(localStorage.getItem("end")){
-    return <>
-    <div className="container">
-      <div className="game">
-        <div className="info-text">GAME HAS ENDED</div>
-      </div>
-    </div>
-    </>
+  if (localStorage.getItem("end")) {
+    return (
+      <>
+        <div className="container">
+          <div className="game">
+            <div className="info-text">GAME HAS ENDED</div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   if (!currRound) {
     return <Loading />;
   }
 
- 
   if (currRound && currRound.message === "No rounds live") {
     return (
       <>
@@ -116,73 +113,120 @@ const GAME = () => {
                 <br />
               </div>
               <CountDown end={currRound.next_round_start_time} />
-              <br/>
-            {currRound.next_round!=="1" &&  <div className="ans_">
-
-              { currRound.flag_1 === "0" ? (
-                <div style={{fontSize:"1.2rem"}}>
-                  You have failed to save the victim
-                  
-                </div>
-              ):(<div style={{fontSize:"1.2rem"}}>You succeeded in saving the victim</div>)}
-              <div className="opinion">
-              {currRound.flag_2 === "1" && currRound.flag_1==="0" && "The victim has been saved by some other people.The killer however is still out there and had sent his henchman to do the deed. These are the things we could retrieve from the henchman, i.e. the notes he was told to leave at the crime scene and the weapons he was going to use."}                  
-              
-            </div>
-              {currRound.next_round!=="1" &&
-                <div className="info-evi">
-                   {currRound.correct_ans}<br/>
-                   {currRound.flag_2==="0" && currRound.flag_1==="0" && "The killer has left these in the crime scene. Think and mark your steps carefully."}
-                   {currRound.flag_1==="1" && "The killer however is still out there and had sent his henchman to do the deed. These are the things we could retrieve from the henchman, i.e. the notes he was told to leave at the crime scene and the weapons he was going to use."}
-                  <div>
-                    <img
-                      src={`${BASE_URL}media/${currRound.encrypt_img}`}
-                      alt=""
-                    />
-                    <img
-                      src={`${BASE_URL}media/${currRound.evidence_img}`}
-                      alt=""
-                    />
+              <br />
+              {currRound.next_round !== "1" && (
+                <div className="ans_">
+                  {currRound.flag_1 === "0" ? (
+                    <div style={{ fontSize: "1.2rem" }}>
+                      You have failed to save the victim
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: "1.2rem" }}>
+                      You succeeded in saving the victim
+                    </div>
+                  )}
+                  <div className="opinion">
+                    {currRound.flag_2 === "1" &&
+                      currRound.flag_1 === "0" &&
+                      "The victim has been saved by some other people.The killer however is still out there and had sent his henchman to do the deed. These are the things we could retrieve from the henchman, i.e. the notes he was told to leave at the crime scene and the weapons he was going to use."}
                   </div>
+                  {currRound.next_round !== "1" && (
+                    <div className="info-evi">
+                      {currRound.correct_ans}
+                      <br />
+                      {currRound.flag_2 === "0" &&
+                        currRound.flag_1 === "0" &&
+                        "The killer has left these in the crime scene. Think and mark your steps carefully."}
+                      {currRound.flag_1 === "1" &&
+                        "The killer however is still out there and had sent his henchman to do the deed. These are the things we could retrieve from the henchman, i.e. the notes he was told to leave at the crime scene and the weapons he was going to use."}
+                      <div>
+                        <img
+                          src={`${BASE_URL}media/${currRound.encrypt_img}`}
+                          alt=""
+                        />
+                        <img
+                          src={`${BASE_URL}media/${currRound.evidence_img}`}
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {currRound.next_round === "5" && (
+                    <div className="info-evi">
+                      The DS PD has received another note from the killer. We
+                      are making it public in the hopes that all of you can shed
+                      some light on the mystery and help us save the future
+                      victims.
+                      <br />
+                      <br />
+                      <strong>NOTE FROM KILLER</strong>
+                      <br />
+                      Your efforts to save the victims disgust me. The world
+                      shall be purged of them, and I will not stop till I have
+                      achieved my goal. I have widened my locations. You will
+                      fail the sinners who count on you to save them.
+                    </div>
+                  )}
                 </div>
-              }
-              {
-                currRound.next_round==="5" && <div className="info-evi">The DS PD has received another note from the killer. We are making it public in the hopes that all of you can shed some light on the mystery and help us save the future victims.
-                  <br/>
-                  <br/>
-                <strong>
-                  
-                NOTE FROM KILLER
-                </strong>
-                <br/>
-                Your efforts to save the victims disgust me. The world shall be purged of them, and I will not stop till I have achieved my goal. I have widened my locations. You will fail the sinners who count on you to save them.</div>
-              }
-                 </div>}
+              )}
               {currRound.next_round == 1 && (
                 <div className="container">
                   <div className="fore-word">
-                    Today morning, a note arrived at the DS
-                    PD precinct, which we believe is from the killer. This is a
-                    substantial development. The note, its timing and tone make
-                    us believe this is not a scattered homicide, rather the
-                    first in a pattern in the work of a serial killer.
+                    This is a tale of two brothers, who had been raised in a
+                    deeply religious household, and had grown distant over the
+                    years, driven apart by their opposing ideologies and
+                    conflicting beliefs. The older brother had amassed a
+                    following of devoted followers who shared his vision of a
+                    world, while the younger brother had chosen a quieter path,
+                    content to live a simple life away from the limelight.
                     <br />
-                    Along with the note, we have received a map and a set of
-                    profiles. This falls in line with the tendency of most
-                    serial killers' need to have their genius acknowledged. The
-                    DS PD makes this information public to all of you in the
-                    hopes of stopping the murderer before he kills another.
                     <br />
-                    The map can be found under the Map tab on the website and
-                    the profiles can be found under the Character tab. The
-                    killer has also left us a poem at the crime scene, which has
-                    been stored under the Evidence tab with all other evidence
-                    that has been found at the crime scene. We believe these
-                    poems may prove to be some kind of a metaphorical message to
-                    us, that could help us stop him.
+                    Their paths rarely crossed, until one fateful day when the
+                    older brother was found dead under mysterious circumstances.
+                    Shocked and saddened by the news, the younger brother
+                    couldn't shake the feeling that there was more to his
+                    brother's death than met the eye.
                     <br />
-                    Good luck to you all, and may we succeed in bringing down
-                    the killer.
+                    <br />
+                    With a heavy heart and a determination to uncover the truth,
+                    the younger brother began to investigate, piecing together
+                    clues and following leads, all while grappling with the
+                    painful realization that he and his brother had become
+                    strangers in each other's eyes.
+                    <br />
+                    <br />
+                    Fast forward to the present day, the early morning sun
+                    streamed through the train window as she made her way to
+                    work, the rhythmic clack of the train tracks providing a
+                    soothing background noise. As she settled into her seat, she
+                    exchanged a quick nod with a stranger who had sat down
+                    beside her. He buried his face in a newspaper, seemingly
+                    engrossed in its contents.
+                    <br />
+                    <br />
+                    But as the stranger disembarked at the next station, he
+                    accidentally dropped a piece of paper. The woman, curious,
+                    picked it up and began to read. Her eyes widened as she took
+                    in the chilling message that was written on the paper. It
+                    described in detail someone who was about to die, and the
+                    description matched her own features almost perfectly.
+                    <br />
+                    <br />
+                    Her heart racing, the woman tried to brush off the unnerving
+                    message as a mere coincidence. But the fear lingered in the
+                    back of her mind as she went about her day. And when news
+                    broke the next day of her lifeless body being discovered in
+                    her cabin, her many followers and loved ones were left
+                    questioning whether the message was somehow connected to her
+                    untimely demise.
+                    <br />
+                    <br />
+                    Had the stranger on the train been a harbinger of death? Was
+                    the message a warning that had gone unheeded? As the
+                    investigation unfolded, the mystery only deepened, leaving
+                    everyone wondering who or what was behind the tragic event.
+                    <br />
+                    <br />
                   </div>
                 </div>
               )}
@@ -194,13 +238,15 @@ const GAME = () => {
       </>
     );
   }
-  
 
-  if(load){
-    return <><Loading/></>
+  if (load) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
   }
-  
-  
+
   return (
     <>
       {/* <Navbar /> */}
@@ -215,7 +261,10 @@ const GAME = () => {
           <div className="riddle">
             {currRound && (
               <>
-                <div dangerouslySetInnerHTML={{__html:`${currRound.riddle}`}} className="line1"/>
+                <div
+                  dangerouslySetInnerHTML={{ __html: `${currRound.riddle}` }}
+                  className="line1"
+                />
               </>
             )}
           </div>

@@ -44,9 +44,9 @@ const GAME = () => {
     <>
       <SubNav />
       <div className="info-evi">
-        Location: {clue.location}
+        Location: <span dangerouslySetInnerHTML={{__html: clue.location}} />
         <br />
-        {clue.content}
+        <span dangerouslySetInnerHTML={{__html: clue.content}} />
       </div>
     </>
   );
