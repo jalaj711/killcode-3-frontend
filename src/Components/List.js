@@ -37,7 +37,7 @@ const List = ({type,item}) => {
           <img src={`${BASE_URL}media/${item.avatar_url}`} alt="" />
           <div className="title">{item.title}</div>
         </div>
-        <div className="info">{item.data}</div>
+        <div className="info" dangerouslySetInnerHTML={{__html: item.data}} />
       </article>
     );
   };
