@@ -133,18 +133,6 @@ const KILL_CODE = () => {
         <main className="kill-code">
           {msg && <div>The answer you entered was {msg}</div>}
           <div className="kill-title">ENTER KILL CODE</div>
-          {currRound && currRound.kill_code_time && (
-            <>
-              <div className="kill-code--">
-                There is a<strong>future</strong> that you need to look into,<strong>boy</strong><br/>
-                The <strong>base</strong> should be strong <strong>all letters</strong> are needed, not a toy;<br/>
-                And when you get the answer,<strong>keep a word</strong><br/>
-                Because you <strong>go back to the base,</strong>that should occur <br/>
-                Enter the answer, you are in the right mode,<br/>
-                All the <strong>links connect</strong>,that to a killcode.
-              </div>
-            </>
-          )}
           <TextBox
             action={(e) => setCode(e.target.value)}
             placeholder={"KILLCODE"}
